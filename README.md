@@ -10,7 +10,7 @@
 ### **Método 1: Constructor Automático (Recomendado)**
 ```bash
 # Clonar y construir automáticamente
-git clone https://github.com/chizhevsky-foundation/heliopulse-observatory.git
+git clone https://github.com/chizhevsky-foundation/heliopulse-observatory
 cd heliopulse-observatory
 node scripts/cosmic-build.js
 npm start
