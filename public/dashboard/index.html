@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="cosmic">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 HelioPulse Observatory - Dashboard Cósmico</title>
+    <style>
+        :root {
+            --cosmic-dark: #0a0e17;
+            --solar-gold: #ffd700;
+            --aurora-green: #00ff88;
+            --corona-orange: #ff6b35;
+            --deep-space: #1a1f3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Courier New", monospace;
+            background: linear-gradient(135deg, var(--cosmic-dark), var(--deep-space));
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .cosmic-header {
+            text-align: center;
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(10, 14, 23, 0.9);
+            position: relative;
+        }
+        
+        .cosmic-header::before {
+            content: "🌌";
+            font-size: 4rem;
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+        
+        .chizhevsky-quote {
+            font-style: italic;
+            color: var(--aurora-green);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .cosmic-card {
+            background: rgba(26, 31, 60, 0.7);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .cosmic-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--solar-gold);
+        }
+        
+        .card-title {
+            color: var(--solar-gold);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .solar-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .indicator-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--aurora-green);
+        }
+        
+        .risk-meter {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .risk-level {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #ffd700, #ff6b35);
+            width: 40%;
+            transition: width 1s ease;
+        }
+        
+        .realtime-update {
+            color: var(--aurora-green);
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+        
+        .warning-panel {
+            background: rgba(255, 107, 53, 0.2);
+            border-left: 4px solid var(--corona-orange);
+            padding: 1rem;
+            margin: 1rem 0;
+            grid-column: 1 / -1;
+        }
+        
+        .data-stream {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header class="cosmic-header">
+        <h1>🌌 OBSERVATORIO HELIOPULSE</h1>
+        <h2>Monitoreo Cósmico para la Paz Global</h2>
+        <p class="chizhevsky-quote">
+            "La humanidad no es sólo un habitante de la Tierra, 
+            sino también del universo, sometiéndose a las influencias 
+            de las fuerzas cósmicas." - Alexander L. Chizhevsky
+        </p>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Panel de Estado Solar -->
+        <div class="cosmic-card">
+            <h3 class="card-title">☀️ ESTADO SOLAR</h3>
+            <div class="solar-indicator">
+                <div>
+                    <div class="indicator-value" id="solar-wind">--</div>
+                    <small>Viento Solar (km/s)</small>
+                </div>
+                <div>
+                    <div class="indicator-value" id="sunspots">--</div>
+                    <small>Manchas Solares</small>
+                </div>
+            </div>
+            <div class="risk-meter">
+                <div class="risk-level" id="solar-risk"></div>
+            </div>
+            <p id="solar-status">Cargando datos cósmicos...</p>
+        </div>
+
+        <!-- Índice Chizhevsky -->
+        <div class="cosmic-card">
+            <h3 class="card-title">🔬 ÍNDICE CHIZHEVSKY</h3>
+            <div class="indicator-value" id="chizhevsky-index">--</div>
+            <p id="chizhevsky-interpretation">Análisis heliobiológico</p>
+            <div class="risk-meter">
+                <div class="risk-level" id="excitability-level"></div>
+            </div>
+            <div id="chizhevsky-details">
+                <p>Nivel de excitabilidad de masas: <span id="mass-excitability">--</span></p>
+                <p>Potencial creativo: <span id="creative-potential">--</span></p>
+            </div>
+        </div>
+
+        <!-- Alertas Geomagnéticas -->
+        <div class="cosmic-card">
+            <h3 class="card-title">🧲 CAMPO GEOMAGNÉTICO</h3>
+            <div class="indicator-value" id="kp-index">--</div>
+            <p id="geomagnetic-status">Estable</p>
+            <div id="aurora-info">
+                <p>Visibilidad aurora: <span id="aurora-visibility">--</span></p>
+                <p>Latitud mínima: <span id="aurora-latitude">--</span>°</p>
+            </div>
+        </div>
+
+        <!-- Panel de Predicciones -->
+        <div class="cosmic-card" style="grid-column: span 2;">
+            <h3 class="card-title">📈 PREDICCIÓN HELIOBIOLÓGICA</h3>
+            <div id="prediction-chart">
+                <canvas id="cosmic-chart" width="400" height="200"></canvas>
+            </div>
+            <div class="realtime-update">
+                Última actualización: <span id="last-update">--</span>
+            </div>
+        </div>
+
+        <!-- Stream de Datos en Tiempo Real -->
+        <div class="cosmic-card" style="grid-column: 1 / -1;">
+            <h3 class="card-title">📡 STREAM DE DATOS CÓSMICOS</h3>
+            <div class="data-stream">
+                <pre id="data-stream-content">Conectando al Observatorio HelioPulse...</pre>
+            </div>
+            <div class="realtime-update pulse">
+                🔄 Conexión WebSocket activa
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        // Inicializar conexión WebSocket
+        const socket = io("http://localhost:3000");
+        
+        // Configurar Chart.js
+        const ctx = document.getElementById("cosmic-chart").getContext("2d");
+        const cosmicChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [],
+                datasets: [{
+                    label: "Índice Chizhevsky",
+                    data: [],
+                    borderColor: "#ffd700",
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: "rgba(255, 215, 0, 0.1)"
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: "#fff" } }
+                },
+                scales: {
+                    x: { ticks: { color: "#aaa" } },
+                    y: { ticks: { color: "#aaa" } }
+                }
+            }
+        });
+
+        // Escuchar actualizaciones del servidor
+        socket.on("welcome", (data) => {
+            console.log("Conectado al Observatorio:", data);
+        });
+
+        socket.on("solar:update", (data) => {
+            updateDashboard(data);
+            updateDataStream(data);
+        });
+
+        // Suscribirse a actualizaciones solares
+        socket.emit("subscribe:solar", { region: "global" });
+
+        function updateDashboard(data) {
+            // Actualizar valores del dashboard
+            document.getElementById("solar-wind").textContent = 
+                data.solarWind?.speed?.toFixed(0) || "--";
+            document.getElementById("sunspots").textContent = 
+                data.sunspots?.toFixed(0) || "--";
+            document.getElementById("kp-index").textContent = 
+                data.kpIndex?.toFixed(1) || "--";
+            
+            // Calcular riesgo solar
+            const solarRisk = Math.min(100, (data.solarWind?.speed || 0) / 5);
+            document.getElementById("solar-risk").style.width = `${solarRisk}%`;
+            
+            // Actualizar índice Chizhevsky (simulado)
+            const chizhevskyIndex = (data.kpIndex || 3) * 1.5 + (data.sunspots || 50) / 100;
+            document.getElementById("chizhevsky-index").textContent = 
+                chizhevskyIndex.toFixed(2);
+            
+            // Actualizar chart
+            const now = new Date().toLocaleTimeString();
+            cosmicChart.data.labels.push(now);
+            cosmicChart.data.datasets[0].data.push(chizhevskyIndex);
+            
+            if (cosmicChart.data.labels.length > 10) {
+                cosmicChart.data.labels.shift();
+                cosmicChart.data.datasets[0].data.shift();
+            }
+            
+            cosmicChart.update();
+            document.getElementById("last-update").textContent = now;
+        }
+
+        function updateDataStream(data) {
+            const streamContent = document.getElementById("data-stream-content");
+            const entry = `[${new Date().toISOString()}] SOLAR: ${data.solarWind?.speed}km/s | ` +
+                         `KP: ${data.kpIndex} | SUNSPOTS: ${data.sunspots}\n` +
+                         streamContent.textContent;
+            
+            // Mantener solo las últimas 10 líneas
+            const lines = entry.split("\n").slice(0, 10);
+            streamContent.textContent = lines.join("\n");
+        }
+
+        // Cargar datos iniciales
+        fetch("/api/solar/status")
+            .then(r => r.json())
+            .then(updateDashboard)
+            .catch(console.error);
+    </script>
+</body>
+</html>
