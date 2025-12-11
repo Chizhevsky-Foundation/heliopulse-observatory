@@ -64,6 +64,9 @@ class HelioPulseCore {
           solar: "/api/solar",
           historical: "/api/historical",
           analysis: "/api/analysis",
+          conflicts: "/api/conflicts",
+          battlefield: "/api/battlefield",
+          cycle25: "/api/cycle25",
           chizhevsky: "/api/chizhevsky",
           realtime: "/api/realtime (WebSocket)"
         },
@@ -71,14 +74,31 @@ class HelioPulseCore {
       });
     });
 
-    // Importar rutas cósmicas
-    const solarRoutes = require("./routes/solar.routes");
-    const historicalRoutes = require("./routes/historical.routes");
-    const analysisRoutes = require("./routes/analysis.routes");
-    
-    this.app.use("/api/solar", solarRoutes);
-    this.app.use("/api/historical", historicalRoutes);
-    this.app.use("/api/analysis", analysisRoutes);
+    // Importar rutas cósmicas - CON MANEJO DE ERRORES
+    try {
+      const solarRoutes = require("./routes/solar.routes");
+      const historicalRoutes = require("./routes/historical.routes");
+      const analysisRoutes = require("./routes/analysis.routes");
+      const conflictRoutes = require("./routes/historical.conflicts");
+      const battlefieldRoutes = require("./routes/battlefield.routes");
+      const cycle25Routes = require("./routes/cycle25.routes");
+      
+      this.app.use("/api/solar", solarRoutes);
+      this.app.use("/api/historical", historicalRoutes);
+      this.app.use("/api/analysis", analysisRoutes);
+      this.app.use("/api/conflicts", conflictRoutes);
+      this.app.use("/api/battlefield", battlefieldRoutes);
+      this.app.use("/api/cycle25", cycle25Routes);
+      
+      console.log("✅ Rutas cargadas correctamente");
+    } catch (error) {
+      console.error("❌ Error cargando rutas:", error.message);
+      
+      // Rutas de emergencia si falla la carga
+      this.app.get("/api/solar/status", (req, res) => {
+        res.json({ status: "En mantenimiento cósmico", error: error.message });
+      });
+    }
   }
 
   initializeSocketEvents() {
@@ -87,8 +107,8 @@ class HelioPulseCore {
       
       socket.emit("welcome", {
         message: "Conectado al Observatorio HelioPulse",
-        solarCycle: process.env.SOLAR_CYCLE,
-        updateInterval: process.env.REALTIME_UPDATE_INTERVAL
+        solarCycle: process.env.SOLAR_CYCLE || 25,
+        updateInterval: process.env.REALTIME_UPDATE_INTERVAL || 30000
       });
 
       // Suscripción a eventos solares
@@ -128,24 +148,52 @@ class HelioPulseCore {
     });
   }
 
-  launch(port = process.env.PORT || 3000) {
-    this.httpServer.listen(port, () => {
-      console.log(`
+  launch() {
+    // INTELIGENCIA DE PUERTOS: Probar del 2220 al 2240
+    const startPort = 2220;
+    const endPort = 2240;
+    
+    const tryLaunch = (port) => {
+      this.httpServer.listen(port, () => {
+        console.log(`
         🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
         🚀 OBSERVATORIO HELIOPULSE INICIADO EN PUERTO ${port}
         📡 Monitoreando el pulso solar para la paz global
-        🌞 Ciclo Solar: ${process.env.SOLAR_CYCLE}
+        🌞 Ciclo Solar: ${process.env.SOLAR_CYCLE || 25}
         🕐 ${new Date().toISOString()}
         🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
-      `);
-      
-      // Mensaje de Chizhevsky
-      console.log(`
+        `);
+        
+        console.log(`
         💫 "La humanidad no es sólo un habitante de la Tierra,
         💫 sino también del universo, sometiéndose a las influencias
         💫 de las fuerzas cósmicas." - Alexander L. Chizhevsky
-      `);
-    });
+        `);
+        
+        console.log(`
+        🎯 ENDPOINTS DISPONIBLES:
+        📊 Dashboard: http://localhost:${port}/dashboard
+        📡 API Status: http://localhost:${port}/api/solar/status
+        📜 Histórico: http://localhost:${port}/api/historical/cycle/25
+        🔬 Análisis: http://localhost:${port}/api/analysis/chizhevsky
+        `);
+      }).on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          console.log(`⚠️  Puerto ${port} ocupado, probando siguiente...`);
+          if (port < endPort) {
+            tryLaunch(port + 1);
+          } else {
+            console.error('❌ Todos los puertos del 2220 al 2240 están ocupados');
+            process.exit(1);
+          }
+        } else {
+          console.error('❌ Error al iniciar servidor:', err);
+          process.exit(1);
+        }
+      });
+    };
+    
+    tryLaunch(startPort);
   }
 }
 

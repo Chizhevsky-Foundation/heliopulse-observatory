@@ -1,327 +1,481 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="cosmic">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌌 HelioPulse Observatory - Dashboard Cósmico</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --cosmic-dark: #0a0e17;
-            --solar-gold: #ffd700;
-            --aurora-green: #00ff88;
-            --corona-orange: #ff6b35;
-            --deep-space: #1a1f3c;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: "Courier New", monospace;
-            background: linear-gradient(135deg, var(--cosmic-dark), var(--deep-space));
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .cosmic-header {
-            text-align: center;
-            padding: 2rem;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            background: rgba(10, 14, 23, 0.9);
-            position: relative;
-        }
-        
-        .cosmic-header::before {
-            content: "🌌";
-            font-size: 4rem;
-            position: absolute;
-            top: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0.3;
-        }
-        
-        .chizhevsky-quote {
+        /* Estilos adicionales en línea */
+        .loading {
+            color: #666;
             font-style: italic;
-            color: var(--aurora-green);
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
         }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .cosmic-card {
-            background: rgba(26, 31, 60, 0.7);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        
-        .cosmic-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--solar-gold);
-        }
-        
-        .card-title {
-            color: var(--solar-gold);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .solar-indicator {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .indicator-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--aurora-green);
-        }
-        
-        .risk-meter {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
+        .error {
+            color: #ff6b35;
+            background: rgba(255,107,53,0.1);
+            padding: 0.5rem;
             border-radius: 5px;
-            overflow: hidden;
-            margin: 1rem 0;
+            border-left: 3px solid #ff6b35;
         }
-        
-        .risk-level {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff88, #ffd700, #ff6b35);
-            width: 40%;
-            transition: width 1s ease;
-        }
-        
-        .realtime-update {
-            color: var(--aurora-green);
-            font-size: 0.8rem;
-            margin-top: 1rem;
-            opacity: 0.8;
-        }
-        
-        .warning-panel {
-            background: rgba(255, 107, 53, 0.2);
-            border-left: 4px solid var(--corona-orange);
-            padding: 1rem;
-            margin: 1rem 0;
-            grid-column: 1 / -1;
-        }
-        
-        .data-stream {
-            font-family: monospace;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 1rem;
+        .success {
+            color: #00ff88;
+            background: rgba(0,255,136,0.1);
+            padding: 0.5rem;
             border-radius: 5px;
-            overflow-x: auto;
-            font-size: 0.9rem;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
+            border-left: 3px solid #00ff88;
         }
     </style>
 </head>
 <body>
+    <!-- Header Cósmico -->
     <header class="cosmic-header">
-        <h1>🌌 OBSERVATORIO HELIOPULSE</h1>
+        <h1><i class="fas fa-sun"></i> OBSERVATORIO HELIOPULSE</h1>
         <h2>Monitoreo Cósmico para la Paz Global</h2>
         <p class="chizhevsky-quote">
+            <i class="fas fa-quote-left"></i>
             "La humanidad no es sólo un habitante de la Tierra, 
             sino también del universo, sometiéndose a las influencias 
-            de las fuerzas cósmicas." - Alexander L. Chizhevsky
+            de las fuerzas cósmicas."
+            <br>
+            <strong>- Alexander L. Chizhevsky</strong>
+            <i class="fas fa-quote-right"></i>
         </p>
+        <div class="update-time">
+            <span id="current-time">Cargando...</span> | 
+            Puerto: <span id="current-port">2220</span> | 
+            Ciclo Solar: <span id="solar-cycle">25</span>
+        </div>
     </header>
 
+    <!-- Grid Principal del Dashboard -->
     <main class="dashboard-grid">
         <!-- Panel de Estado Solar -->
-        <div class="cosmic-card">
-            <h3 class="card-title">☀️ ESTADO SOLAR</h3>
+        <section class="cosmic-card">
+            <h3 class="card-title">
+                <i class="fas fa-sun"></i> ESTADO SOLAR
+            </h3>
+            
             <div class="solar-indicator">
-                <div>
+                <div class="indicator-group">
                     <div class="indicator-value" id="solar-wind">--</div>
-                    <small>Viento Solar (km/s)</small>
+                    <div class="indicator-label">Viento Solar (km/s)</div>
                 </div>
-                <div>
+                <div class="indicator-group">
                     <div class="indicator-value" id="sunspots">--</div>
-                    <small>Manchas Solares</small>
+                    <div class="indicator-label">Manchas Solares</div>
                 </div>
             </div>
+            
             <div class="risk-meter">
-                <div class="risk-level" id="solar-risk"></div>
+                <div class="risk-level" id="solar-risk" style="width: 0%"></div>
             </div>
-            <p id="solar-status">Cargando datos cósmicos...</p>
-        </div>
+            <div class="meter-labels">
+                <span>Bajo</span>
+                <span>Medio</span>
+                <span>Alto</span>
+            </div>
+            
+            <div id="solar-status" class="mt-1">
+                <span class="status-indicator status-warning"></span>
+                <span class="loading">Cargando datos solares...</span>
+            </div>
+            
+            <div class="info-grid mt-1">
+                <div class="info-item">
+                    <div class="info-label">Temperatura</div>
+                    <div class="info-value" id="solar-temp">-- K</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Densidad</div>
+                    <div class="info-value" id="solar-density">-- p/cm³</div>
+                </div>
+            </div>
+        </section>
 
         <!-- Índice Chizhevsky -->
-        <div class="cosmic-card">
-            <h3 class="card-title">🔬 ÍNDICE CHIZHEVSKY</h3>
-            <div class="indicator-value" id="chizhevsky-index">--</div>
-            <p id="chizhevsky-interpretation">Análisis heliobiológico</p>
+        <section class="cosmic-card">
+            <h3 class="card-title">
+                <i class="fas fa-brain"></i> ÍNDICE CHIZHEVSKY
+            </h3>
+            
+            <div class="text-center">
+                <div class="indicator-value" id="chizhevsky-index" style="font-size: 3rem;">--</div>
+                <div id="chizhevsky-level" class="loading">Calculando...</div>
+            </div>
+            
             <div class="risk-meter">
-                <div class="risk-level" id="excitability-level"></div>
+                <div class="risk-level" id="excitability-level" style="width: 0%"></div>
             </div>
-            <div id="chizhevsky-details">
-                <p>Nivel de excitabilidad de masas: <span id="mass-excitability">--</span></p>
-                <p>Potencial creativo: <span id="creative-potential">--</span></p>
+            <div class="meter-labels">
+                <span>Estable</span>
+                <span>Vigilancia</span>
+                <span>Alerta</span>
             </div>
-        </div>
+            
+            <div class="info-grid mt-1">
+                <div class="info-item">
+                    <div class="info-label">Impacto Social</div>
+                    <div class="info-value" id="social-impact">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Potencial Creativo</div>
+                    <div class="info-value" id="creative-potential">--/10</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Riesgo Conflicto</div>
+                    <div class="info-value" id="conflict-risk">--/10</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Tendencia</div>
+                    <div class="info-value" id="chizhevsky-trend">--</div>
+                </div>
+            </div>
+            
+            <div id="chizhevsky-interpretation" class="mt-1" style="font-style: italic; color: #aaa;">
+                Análisis heliobiológico en progreso...
+            </div>
+        </section>
 
-        <!-- Alertas Geomagnéticas -->
-        <div class="cosmic-card">
-            <h3 class="card-title">🧲 CAMPO GEOMAGNÉTICO</h3>
-            <div class="indicator-value" id="kp-index">--</div>
-            <p id="geomagnetic-status">Estable</p>
-            <div id="aurora-info">
-                <p>Visibilidad aurora: <span id="aurora-visibility">--</span></p>
-                <p>Latitud mínima: <span id="aurora-latitude">--</span>°</p>
+        <!-- Campo Geomagnético -->
+        <section class="cosmic-card">
+            <h3 class="card-title">
+                <i class="fas fa-magnet"></i> CAMPO GEOMAGNÉTICO
+            </h3>
+            
+            <div class="text-center">
+                <div class="indicator-value" id="kp-index" style="font-size: 3rem;">--</div>
+                <div id="kp-level" class="loading">Nivel KP</div>
             </div>
-        </div>
-
-        <!-- Panel de Predicciones -->
-        <div class="cosmic-card" style="grid-column: span 2;">
-            <h3 class="card-title">📈 PREDICCIÓN HELIOBIOLÓGICA</h3>
-            <div id="prediction-chart">
-                <canvas id="cosmic-chart" width="400" height="200"></canvas>
+            
+            <div id="geomagnetic-status" class="mt-1">
+                <span class="status-indicator status-warning"></span>
+                <span class="loading">Evaluando estado...</span>
             </div>
-            <div class="realtime-update">
-                Última actualización: <span id="last-update">--</span>
+            
+            <div class="info-grid mt-1">
+                <div class="info-item">
+                    <div class="info-label">Tormenta</div>
+                    <div class="info-value" id="storm-warning">No activa</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Índice Dst</div>
+                    <div class="info-value" id="dst-index">-- nT</div>
+                </div>
             </div>
-        </div>
+            
+            <div class="mt-1">
+                <h4><i class="fas fa-rainbow"></i> Aurora</h4>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Visibilidad</div>
+                        <div class="info-value" id="aurora-visibility">--</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Latitud mínima</div>
+                        <div class="info-value" id="aurora-latitude">--°</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Stream de Datos en Tiempo Real -->
-        <div class="cosmic-card" style="grid-column: 1 / -1;">
-            <h3 class="card-title">📡 STREAM DE DATOS CÓSMICOS</h3>
-            <div class="data-stream">
-                <pre id="data-stream-content">Conectando al Observatorio HelioPulse...</pre>
+        <section class="cosmic-card" style="grid-column: span 2;">
+            <h3 class="card-title">
+                <i class="fas fa-satellite-dish"></i> STREAM DE DATOS CÓSMICOS
+            </h3>
+            
+            <div class="data-stream" id="data-log">
+                <div class="data-entry">
+                    <span class="data-time">[21:45:00]</span>
+                    Inicializando Observatorio HelioPulse...
+                </div>
+                <div class="data-entry">
+                    <span class="data-time">[21:45:01]</span>
+                    Conectando con fuentes de datos solares...
+                </div>
+                <div class="data-entry">
+                    <span class="data-time">[21:45:02]</span>
+                    Sistema de análisis Chizhevsky activado...
+                </div>
             </div>
-            <div class="realtime-update pulse">
-                🔄 Conexión WebSocket activa
+            
+            <div class="info-grid mt-1">
+                <div class="info-item">
+                    <div class="info-label">Conexión WebSocket</div>
+                    <div class="info-value" id="ws-status">
+                        <span class="status-indicator status-warning"></span> Conectando...
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Última actualización</div>
+                    <div class="info-value" id="last-update">--</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Intervalo</div>
+                    <div class="info-value">30 segundos</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Modo</div>
+                    <div class="info-value" id="data-mode">En vivo</div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Panel de Correlación Histórica -->
+        <section class="cosmic-card">
+            <h3 class="card-title">
+                <i class="fas fa-history"></i> CORRELACIÓN HISTÓRICA
+            </h3>
+            
+            <div class="text-center mb-1">
+                <div class="indicator-value" id="correlation-score">--</div>
+                <div class="indicator-label">Puntuación de Correlación</div>
+            </div>
+            
+            <div id="historical-events">
+                <div class="loading">Cargando eventos históricos...</div>
+            </div>
+            
+            <div class="mt-1">
+                <button onclick="loadHistoricalData()" class="info-item" style="width: 100%; text-align: center; cursor: pointer; background: rgba(157,78,221,0.2);">
+                    <i class="fas fa-sync-alt"></i> Actualizar Datos Históricos
+                </button>
+            </div>
+        </section>
+
+        <!-- Panel de Control y Configuración -->
+        <section class="cosmic-card">
+            <h3 class="card-title">
+                <i class="fas fa-sliders-h"></i> CONTROLES
+            </h3>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Actualización Automática</div>
+                    <div class="info-value">
+                        <label class="switch">
+                            <input type="checkbox" id="auto-update-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Alertas de Sonido</div>
+                    <div class="info-value">
+                        <label class="switch">
+                            <input type="checkbox" id="sound-alerts-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-1">
+                <button onclick="refreshAllData()" style="width: 100%; padding: 10px; background: linear-gradient(90deg, var(--solar-gold), var(--corona-orange)); border: none; border-radius: 8px; color: black; font-weight: bold; cursor: pointer; margin-bottom: 10px;">
+                    <i class="fas fa-sync-alt"></i> ACTUALIZAR TODOS LOS DATOS
+                </button>
+                
+                <button onclick="testEndpoints()" style="width: 100%; padding: 10px; background: rgba(76,201,240,0.2); border: 1px solid var(--star-blue); border-radius: 8px; color: white; cursor: pointer;">
+                    <i class="fas fa-vial"></i> PROBAR ENDPOINTS
+                </button>
+            </div>
+            
+            <div class="update-time mt-1">
+                <div id="system-status" class="success">
+                    <i class="fas fa-check-circle"></i> Sistema operativo
+                </div>
+            </div>
+        </section>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem; color: #666; border-top: 1px solid rgba(255,215,0,0.1);">
+        <p>
+            <strong>🌌 Observatorio HelioPulse</strong> | 
+            Honrando el legado de Alexander L. Chizhevsky
+        </p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            Monitoreando el pulso solar para la paz global | 
+            Puerto 2220 | 
+            <span id="footer-time">--:--:--</span>
+        </p>
+    </footer>
+
+    <!-- Scripts -->
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/heliopulse.js"></script>
     <script>
-        // Inicializar conexión WebSocket
-        const socket = io("http://localhost:3000");
+        // Estilos para switches
+        const style = document.createElement('style');
+        style.textContent = `
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 24px;
+            }
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #333;
+                transition: .4s;
+                border-radius: 24px;
+            }
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 16px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+            input:checked + .slider {
+                background-color: var(--aurora-green);
+            }
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Función para actualizar tiempo en footer
+        function updateFooterTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('es-ES');
+            const dateStr = now.toLocaleDateString('es-ES');
+            document.getElementById('footer-time').textContent = `${dateStr} ${timeStr}`;
+            document.getElementById('current-time').textContent = timeStr;
+        }
         
-        // Configurar Chart.js
-        const ctx = document.getElementById("cosmic-chart").getContext("2d");
-        const cosmicChart = new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: [],
-                datasets: [{
-                    label: "Índice Chizhevsky",
-                    data: [],
-                    borderColor: "#ffd700",
-                    tension: 0.4,
-                    fill: true,
-                    backgroundColor: "rgba(255, 215, 0, 0.1)"
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { labels: { color: "#fff" } }
-                },
-                scales: {
-                    x: { ticks: { color: "#aaa" } },
-                    y: { ticks: { color: "#aaa" } }
+        // Actualizar tiempo cada segundo
+        setInterval(updateFooterTime, 1000);
+        updateFooterTime();
+
+        // Función para refrescar todos los datos
+        function refreshAllData() {
+            if (window.helioPulse) {
+                window.helioPulse.loadInitialData();
+                document.getElementById('system-status').className = 'success';
+                document.getElementById('system-status').innerHTML = 
+                    '<i class="fas fa-sync-alt fa-spin"></i> Actualizando datos...';
+            }
+        }
+
+        // Función para probar endpoints
+        async function testEndpoints() {
+            const endpoints = [
+                '/api/solar/status',
+                '/api/analysis/chizhevsky?kp=4.5&sunspots=85',
+                '/api/historical/cycle/25'
+            ];
+            
+            const statusEl = document.getElementById('system-status');
+            statusEl.className = 'loading';
+            statusEl.innerHTML = '<i class="fas fa-vial"></i> Probando endpoints...';
+            
+            let allOk = true;
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetch(endpoint);
+                    const data = await response.json();
+                    
+                    if (!data.success) {
+                        allOk = false;
+                        console.error(`Endpoint ${endpoint} falló:`, data.error);
+                    }
+                } catch (error) {
+                    allOk = false;
+                    console.error(`Error en ${endpoint}:`, error);
                 }
             }
+            
+            if (allOk) {
+                statusEl.className = 'success';
+                statusEl.innerHTML = '<i class="fas fa-check-circle"></i> Todos los endpoints funcionan';
+            } else {
+                statusEl.className = 'error';
+                statusEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Algunos endpoints fallaron';
+            }
+        }
+
+        // Función para cargar datos históricos
+        async function loadHistoricalData() {
+            const eventsEl = document.getElementById('historical-events');
+            eventsEl.innerHTML = '<div class="loading">Cargando...</div>';
+            
+            try {
+                const response = await fetch('/api/historical/cycle/25');
+                const data = await response.json();
+                
+                if (data.success) {
+                    eventsEl.innerHTML = '';
+                    data.data.events.forEach(event => {
+                        const eventDiv = document.createElement('div');
+                        eventDiv.className = 'data-entry';
+                        eventDiv.innerHTML = `<i class="fas fa-star" style="color: var(--solar-gold);"></i> ${event}`;
+                        eventsEl.appendChild(eventDiv);
+                    });
+                    
+                    document.getElementById('correlation-score').textContent = 
+                        data.data.correlation.score.toFixed(2);
+                }
+            } catch (error) {
+                eventsEl.innerHTML = `<div class="error">Error cargando datos históricos</div>`;
+            }
+        }
+
+        // Inicializar WebSocket
+        const socket = io('http://localhost:2220');
+        
+        socket.on('connect', () => {
+            document.getElementById('ws-status').innerHTML = 
+                '<span class="status-indicator status-good"></span> Conectado';
+            socket.emit('subscribe:solar', { region: 'global' });
         });
-
-        // Escuchar actualizaciones del servidor
-        socket.on("welcome", (data) => {
-            console.log("Conectado al Observatorio:", data);
+        
+        socket.on('disconnect', () => {
+            document.getElementById('ws-status').innerHTML = 
+                '<span class="status-indicator status-danger"></span> Desconectado';
         });
-
-        socket.on("solar:update", (data) => {
-            updateDashboard(data);
-            updateDataStream(data);
-        });
-
-        // Suscribirse a actualizaciones solares
-        socket.emit("subscribe:solar", { region: "global" });
-
-        function updateDashboard(data) {
-            // Actualizar valores del dashboard
-            document.getElementById("solar-wind").textContent = 
-                data.solarWind?.speed?.toFixed(0) || "--";
-            document.getElementById("sunspots").textContent = 
-                data.sunspots?.toFixed(0) || "--";
-            document.getElementById("kp-index").textContent = 
-                data.kpIndex?.toFixed(1) || "--";
-            
-            // Calcular riesgo solar
-            const solarRisk = Math.min(100, (data.solarWind?.speed || 0) / 5);
-            document.getElementById("solar-risk").style.width = `${solarRisk}%`;
-            
-            // Actualizar índice Chizhevsky (simulado)
-            const chizhevskyIndex = (data.kpIndex || 3) * 1.5 + (data.sunspots || 50) / 100;
-            document.getElementById("chizhevsky-index").textContent = 
-                chizhevskyIndex.toFixed(2);
-            
-            // Actualizar chart
-            const now = new Date().toLocaleTimeString();
-            cosmicChart.data.labels.push(now);
-            cosmicChart.data.datasets[0].data.push(chizhevskyIndex);
-            
-            if (cosmicChart.data.labels.length > 10) {
-                cosmicChart.data.labels.shift();
-                cosmicChart.data.datasets[0].data.shift();
+        
+        socket.on('solar:update', (data) => {
+            // Actualizar datos en tiempo real
+            if (window.helioPulse && window.helioPulse.data.solar) {
+                window.helioPulse.data.solar.data.solarWind.speed = data.solarWind.speed;
+                window.helioPulse.updateSolarPanel();
             }
             
-            cosmicChart.update();
-            document.getElementById("last-update").textContent = now;
-        }
-
-        function updateDataStream(data) {
-            const streamContent = document.getElementById("data-stream-content");
-            const entry = `[${new Date().toISOString()}] SOLAR: ${data.solarWind?.speed}km/s | ` +
-                         `KP: ${data.kpIndex} | SUNSPOTS: ${data.sunspots}\n` +
-                         streamContent.textContent;
-            
-            // Mantener solo las últimas 10 líneas
-            const lines = entry.split("\n").slice(0, 10);
-            streamContent.textContent = lines.join("\n");
-        }
+            // Agregar al log
+            const logEntry = document.createElement('div');
+            logEntry.className = 'data-entry';
+            logEntry.innerHTML = `
+                <span class="data-time">[${new Date().toLocaleTimeString('es-ES', {hour12: false})}]</span>
+                WebSocket: Solar ${data.solarWind.speed.toFixed(0)} km/s, KP ${data.kpIndex.toFixed(1)}
+            `;
+            document.getElementById('data-log').prepend(logEntry);
+        });
 
         // Cargar datos iniciales
-        fetch("/api/solar/status")
-            .then(r => r.json())
-            .then(updateDashboard)
-            .catch(console.error);
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshAllData();
+            loadHistoricalData();
+            testEndpoints();
+        });
     </script>
 </body>
 </html>
