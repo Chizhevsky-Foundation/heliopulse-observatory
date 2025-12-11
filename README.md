@@ -201,3 +201,77 @@ Este proyecto continúa su visión de una humanidad consciente de sus conexiones
 **📧 ia.mechmind@gmail.com**
 
 *Monitoreando el pulso solar para la paz global*
+
+## 📚 Documentación Completa
+
+El Observatorio HelioPulse cuenta con documentación extensa para colaboradores, usuarios y investigadores:
+
+### 🤝 Para Colaboradores
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guía completa para contribuir al proyecto
+- **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Código de conducta para la comunidad
+- **[.github/](.github/)** - Templates para issues y pull requests
+
+### ⚖️ Legal y Seguridad
+- **[LICENSE](LICENSE)** - Licencia de Paz Cósmica (MIT con adiciones para paz)
+- **[SECURITY.md](SECURITY.md)** - Política de seguridad y reporte de vulnerabilidades
+
+### 🔬 Guías Específicas
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Guía de despliegue y configuración
+- **[CHANGELOG.md](CHANGELOG.md)** - Historial de cambios y mejoras
+- **[/docs/](/docs/)** - Documentación técnica y científica detallada
+
+## 🏛️ Gobernanza del Proyecto
+
+### Estructura de Toma de Decisiones
+1. **Mantenedores Principales**: Decisiones técnicas y arquitectónicas
+2. **Comité Científico**: Validación de metodologías y análisis
+3. **Comunidad**: Discusión abierta en issues y PRs
+
+### Canales de Comunicación
+- **Issues de GitHub**: Para discusiones técnicas y científicas
+- **Email**: ia.mechmind@gmail.com (para asuntos no técnicos)
+- **Documentación**: Principal fuente de información y guías
+
+## 🌍 Impacto y Visión
+
+### Misión a Largo Plazo
+1. **2024-2025**: Establecer base científica y técnica sólida
+2. **2026-2027**: Expandir fuentes de datos y análisis
+3. **2028-2030**: Convertirse en referencia global en heliobiología digital
+
+### Métricas de Éxito
+- ✅ Número de investigadores utilizando la plataforma
+- ✅ Calidad y cantidad de análisis publicados
+- ✅ Impacto en discusiones sobre paz global
+- ✅ Integración con instituciones académicas
+
+## 👥 Reconocimientos
+
+### Equipo Actual
+- **Aprendiz Cósmico** - Desarrollo principal y arquitectura
+- **Maestro Developer** - Mentoría y guía técnica
+- **Comunidad de Colaboradores** - Mejoras continuas
+
+### Inspiración Científica
+- **Alexander L. Chizhevsky** - Padre de la heliobiología
+- **Todos los investigadores** que continúan su legado
+- **La comunidad científica** que comparte conocimiento abiertamente
+
+## 🔗 Enlaces Rápidos
+
+- **[Comenzar a Contribuir](CONTRIBUTING.md)**
+- **[Reportar un Error](.github/ISSUE_TEMPLATE/bug_report.md)**
+- **[Solicitar Característica](.github/ISSUE_TEMPLATE/feature_request.md)**
+- **[Hacer Pregunta Científica](.github/ISSUE_TEMPLATE/science_question.md)**
+- **[Ver Código Fuente](src/)**
+- **[Probar Dashboard](http://localhost:2220/dashboard)**
+
+---
+
+*"La documentación es el puente entre el conocimiento y su aplicación práctica para el bien de la humanidad."*
+
+**🌌 The Chizhevsky Foundation**  
+**🔗 https://chizhevsky-foundation.github.io/heliopulse-observatory/**  
+**📧 ia.mechmind@gmail.com**
+
+*Monitoreando el pulso solar para la paz global - Documentación versión 1.0*
