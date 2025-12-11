@@ -1,0 +1,15 @@
+.env.example
+.gitignore
+Dockerfile
+README.md
+app/api/solar/activity.py
+docker-compose.yml
+docs/info.md
+package.json
+public/dashboard/index.html
+scripts/cosmic-build.js
+src/app.js
+src/routes/solar.routes.js
+src/services/chizhevsky.service.js
+start-servicios.sh
+tests/unit/chizhevsky.test.js

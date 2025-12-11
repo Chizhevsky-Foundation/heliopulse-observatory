@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 Análisis Chizhevsky: Actividad Solar y Conflictos</title>
+    <style>
+        :root {
+            --cosmic-dark: #0a0e17;
+            --solar-gold: #ffd700;
+            --peace-blue: #4169e1;
+            --conflict-red: #dc143c;
+            --data-purple: #9d4edd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--cosmic-dark), #1a1f3c);
+            color: white;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: rgba(26, 31, 60, 0.7);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--solar-gold), var(--peace-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .chizhevsky-quote {
+            font-style: italic;
+            color: var(--solar-gold);
+            padding: 1.5rem;
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--solar-gold);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: rgba(26, 31, 60, 0.7);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--solar-gold);
+        }
+        
+        .card h3 {
+            color: var(--solar-gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card h3 i {
+            font-size: 1.2rem;
+        }
+        
+        .data-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .positive { color: #00ff88; }
+        .negative { color: #ff6b35; }
+        .neutral { color: #ffd700; }
+        
+        .analysis-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--solar-gold);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin: 2rem 0;
+            width: 50%;
+            padding: 1rem;
+            background: rgba(26, 31, 60, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            margin-right: auto;
+        }
+        
+        .timeline-item:nth-child(even) {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--solar-gold);
+            font-size: 1.2rem;
+        }
+        
+        .peace-message {
+            background: linear-gradient(135deg, rgba(65, 105, 225, 0.2), rgba(0, 255, 136, 0.1));
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+            border: 1px solid var(--peace-blue);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--solar-gold);
+            color: black;
+        }
+        
+        .btn-secondary {
+            background: rgba(65, 105, 225, 0.8);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .data-display {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+                margin-right: 0 !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🌌 Análisis Chizhevsky</h1>
+            <p class="hero-subtitle">
+                Explorando las conexiones entre actividad solar y conflictos históricos<br>
+                En memoria de Alexander L. Chizhevsky, pionero de la heliobiología
+            </p>
+            
+            <div class="chizhevsky-quote">
+                <i class="fas fa-quote-left"></i>
+                "La humanidad no es sólo un habitante de la Tierra, sino también del universo, 
+                sometiéndose a las influencias de las fuerzas cósmicas."
+                <br>
+                <strong>- Alexander L. Chizhevsky (1897-1964)</strong>
+                <i class="fas fa-quote-right"></i>
+            </div>
+        </div>
+        
+        <!-- Estadísticas Clave -->
+        <div class="grid">
+            <div class="card">
+                <h3><i class="fas fa-sun"></i> Correlación Actual</h3>
+                <div class="data-value" id="correlation-value">Cargando...</div>
+                <p id="correlation-interpretation">Analizando datos históricos</p>
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-handshake"></i> Conflictos Analizados</h3>
+                <div class="data-value" id="conflicts-count">--</div>
+                <p>Israel-Palestina (1947-2024)</p>
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-chart-line"></i> Ciclo Solar Actual</h3>
+                <div class="data-value">25</div>
+                <p>Fase: <span id="solar-phase">Máximo (2024-2025)</span></p>
+            </div>
+        </div>
+        
+        <!-- Controles -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="loadIsraelPalestineAnalysis()">
+                <i class="fas fa-star-of-david"></i> Análisis Israel-Palestina
+            </button>
+            <button class="btn btn-secondary" onclick="loadPredictions()">
+                <i class="fas fa-crystal-ball"></i> Predicciones Basadas en Ciclos
+            </button>
+            <button class="btn btn-secondary" onclick="loadPeaceRecommendations()">
+                <i class="fas fa-dove"></i> Recomendaciones para la Paz
+            </button>
+            <button class="btn btn-secondary" onclick="loadFullData()">
+                <i class="fas fa-database"></i> Ver Datos Completos
+            </button>
+        </div>
+        
+        <!-- Análisis Principal -->
+        <div class="analysis-section">
+            <h2><i class="fas fa-microscope"></i> Análisis de Correlación</h2>
+            <div id="main-analysis">
+                <p>Selecciona un análisis para comenzar...</p>
+            </div>
+        </div>
+        
+        <!-- Línea Temporal -->
+        <div class="analysis-section">
+            <h2><i class="fas fa-timeline"></i> Línea Temporal: Conflictos y Ciclos Solares</h2>
+            <div class="timeline" id="timeline-container">
+                <!-- Se llena con JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Mensaje de Paz -->
+        <div class="peace-message">
+            <h3><i class="fas fa-peace"></i> Recordatorio Importante</h3>
+            <p>
+                Este análisis explora patrones, no busca justificar conflictos.<br>
+                La correlación no implica causalidad. La paz requiere:<br>
+                <strong>voluntad humana, diálogo, compasión y justicia</strong>.
+            </p>
+            <p style="margin-top: 1rem; font-style: italic;">
+                "Comprender los ciclos cósmicos nos da herramientas para trascenderlos"
+            </p>
+        </div>
+        
+        <!-- Visualización de Datos -->
+        <div class="analysis-section">
+            <h2><i class="fas fa-chart-bar"></i> Datos y Estadísticas</h2>
+            <div class="data-display" id="data-output">
+                Los datos se cargarán aquí...
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const BASE_URL = window.location.origin;
+        
+        // Cargar análisis Israel-Palestina
+        async function loadIsraelPalestineAnalysis() {
+            try {
+                showLoading('main-analysis', 'Analizando datos Israel-Palestina...');
+                
+                const response = await fetch(`${BASE_URL}/api/conflicts/israel-palestine`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Actualizar estadísticas
+                    document.getElementById('correlation-value').textContent = data.correlation;
+                    document.getElementById('correlation-value').className = 
+                        `data-value ${data.correlation > 0.5 ? 'positive' : data.correlation > 0.3 ? 'neutral' : 'negative'}`;
+                    
+                    document.getElementById('correlation-interpretation').textContent = data.interpretation;
+                    document.getElementById('conflicts-count').textContent = data.totalConflicts;
+                    
+                    // Mostrar análisis principal
+                    const analysisHTML = `
+                        <div style="margin: 1rem 0;">
+                            <h3 style="color: var(--solar-gold); margin-bottom: 1rem;">
+                                Israel-Palestina: ${data.period}
+                            </h3>
+                            <p><strong>Correlación de Pearson:</strong> ${data.correlation}</p>
+                            <p><strong>Interpretación:</strong> ${data.interpretation}</p>
+                            <p><strong>Contexto Actual:</strong> ${data.currentContext.isSolarMaximum ? 
+                                '🌞 Estamos en máximo solar (2024-2025)' : 
+                                '🌙 Período de actividad solar moderada'}</p>
+                        </div>
+                        
+                        <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 5px;">
+                            <h4>📊 Análisis Estadístico</h4>
+                            <p>• Conflictos durante picos solares: ${data.statisticalAnalysis.conflictsDuringPeaks}</p>
+                            <p>• Intensidad media durante picos: ${data.statisticalAnalysis.averageIntensityPeak}/10</p>
+                            <p>• Intensidad media fuera de picos: ${data.statisticalAnalysis.averageIntensityNonPeak}/10</p>
+                            <p>• Diferencia: ${data.statisticalAnalysis.intensityDifference}</p>
+                        </div>
+                        
+                        <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(157,78,221,0.1); border-radius: 5px;">
+                            <h4 style="color: var(--data-purple);">💭 Reflexión Chizhevsky</h4>
+                            <p>"${data.peaceMessage}"</p>
+                        </div>
+                    `;
+                    
+                    document.getElementById('main-analysis').innerHTML = analysisHTML;
+                    
+                    // Cargar línea temporal
+                    loadTimeline(data.combinedData);
+                    
+                    // Mostrar datos JSON
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(data.combinedData.slice(0, 5), null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                document.getElementById('main-analysis').innerHTML = 
+                    `<div style="color: #ff6b35;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Cargar predicciones
+        async function loadPredictions() {
+            try {
+                showLoading('main-analysis', 'Cargando predicciones basadas en ciclos solares...');
+                
+                const response = await fetch(`${BASE_URL}/api/conflicts/predict?years=7`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    let predictionsHTML = `
+                        <h3 style="color: var(--solar-gold); margin-bottom: 1rem;">
+                            Predicciones Basadas en Patrones Históricos
+                        </h3>
+                        <p><strong>Ciclo Solar Actual:</strong> ${data.currentSolarCycle} (${data.currentPhase})</p>
+                        <p><em>${data.note}</em></p>
+                        
+                        <div style="margin-top: 1.5rem;">
+                    `;
+                    
+                    data.predictions.forEach(pred => {
+                        predictionsHTML += `
+                            <div style="margin: 1rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 5px;">
+                                <h4>${pred.year} - Actividad Solar: ${pred.solarActivity}</h4>
+                                <p><strong>Nivel de Riesgo:</strong> 
+                                    <span style="color: ${pred.predictedRisk === 'elevado' ? '#ff6b35' : 
+                                                     pred.predictedRisk === 'medio' ? '#ffd700' : '#00ff88'}">
+                                        ${pred.predictedRisk.toUpperCase()}
+                                    </span>
+                                </p>
+                                <p><strong>Recomendaciones:</strong></p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                    ${pred.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                                </ul>
+                                <p style="margin-top: 0.5rem; font-size: 0.9em; color: #aaa;">
+                                    <strong>Patrón Histórico:</strong> ${pred.historicalPattern.join(', ')}
+                                </p>
+                            </div>
+                        `;
+                    });
+                    
+                    predictionsHTML += '</div>';
+                    document.getElementById('main-analysis').innerHTML = predictionsHTML;
+                    
+                    // Mostrar datos JSON
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(data.predictions, null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                document.getElementById('main-analysis').innerHTML = 
+                    `<div style="color: #ff6b35;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Cargar recomendaciones para la paz
+        async function loadPeaceRecommendations() {
+            try {
+                showLoading('main-analysis', 'Cargando recomendaciones para la paz...');
+                
+                const response = await fetch(`${BASE_URL}/api/conflicts/peace-recommendations`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    let recommendationsHTML = `
+                        <h3 style="color: var(--peace-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-dove"></i> Estrategias para la Paz
+                        </h3>
+                        <p style="font-style: italic; margin-bottom: 1.5rem;">"${data.message}"</p>
+                        <p style="color: var(--solar-gold); margin-bottom: 1rem;">${data.chizhevskyWisdom}</p>
+                        
+                        <div style="margin-top: 1.5rem;">
+                    `;
+                    
+                    // Basado en Chizhevsky
+                    recommendationsHTML += `
+                        <h4>Basado en los estudios de Chizhevsky:</h4>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            ${data.recommendations.basedOnChizhevsky.map(rec => 
+                                `<li>${rec}</li>`).join('')}
+                        </ul>
+                    `;
+                    
+                    // Construcción de paz general
+                    recommendationsHTML += `
+                        <h4>Construcción de Paz General:</h4>
+                        <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                            ${data.recommendations.generalPeaceBuilding.map(rec => 
+                                `<li>${rec}</li>`).join('')}
+                        </ul>
+                    `;
+                    
+                    // Israel-Palestina específico
+                    recommendationsHTML += `
+                        <h4>Específico para Israel-Palestina:</h4>
+                        <ul style="margin-left: 1.5rem;">
+                            ${data.recommendations.specificIsraelPalestine.map(rec => 
+                                `<li>${rec}</li>`).join('')}
+                        </ul>
+                    `;
+                    
+                    recommendationsHTML += '</div>';
+                    document.getElementById('main-analysis').innerHTML = recommendationsHTML;
+                    
+                    // Mostrar datos JSON
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(data.recommendations, null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                document.getElementById('main-analysis').innerHTML = 
+                    `<div style="color: #ff6b35;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Cargar todos los datos
+        async function loadFullData() {
+            try {
+                showLoading('main-analysis', 'Cargando datos completos...');
+                showLoading('data-output', 'Cargando...');
+                
+                const response = await fetch(`${BASE_URL}/api/conflicts/chizhevsky?region=israel-palestine`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('main-analysis').innerHTML = `
+                        <h3 style="color: var(--solar-gold); margin-bottom: 1rem;">
+                            Análisis Completo Chizhevsky
+                        </h3>
+                        <p><strong>Región:</strong> ${data.analysis.region}</p>
+                        <p><strong>Período:</strong> ${data.analysis.period}</p>
+                        <p><strong>Correlación:</strong> ${data.analysis.correlation}</p>
+                        <p><strong>Interpretación:</strong> ${data.analysis.interpretation}</p>
+                        <p style="margin-top: 1rem; font-style: italic;">
+                            "${data.analysis.chizhevskyNote}"
+                        </p>
+                    `;
+                    
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(data.analysis, null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                document.getElementById('main-analysis').innerHTML = 
+                    `<div style="color: #ff6b35;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Cargar línea temporal
+        function loadTimeline(events) {
+            const timeline = document.getElementById('timeline-container');
+            timeline.innerHTML = '';
+            
+            events.sort((a, b) => a.year - b.year).forEach(event => {
+                const item = document.createElement('div');
+                item.className = 'timeline-item';
+                
+                item.innerHTML = `
+                    <div class="timeline-year">${event.year}</div>
+                    <p><strong>${event.event}</strong></p>
+                    <p>Intensidad: ${event.intensity}/10 | Manchas solares: ${event.sunspots}</p>
+                    <p>Ciclo Solar: ${event.solarCycle} ${event.isPeak ? '⚡ (PICO)' : ''}</p>
+                    ${event.casualties > 0 ? `<p style="color: #ff6b35; font-size: 0.9em;">
+                        Víctimas estimadas: ${event.casualties.toLocaleString()}
+                    </p>` : ''}
+                `;
+                
+                timeline.appendChild(item);
+            });
+        }
+        
+        // Mostrar estado de carga
+        function showLoading(elementId, message) {
+            document.getElementById(elementId).innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div class="loading-spinner" style="
+                        border: 3px solid rgba(255,215,0,0.3);
+                        border-top: 3px solid var(--solar-gold);
+                        border-radius: 50%;
+                        width: 40px;
+                        height: 40px;
+                        animation: spin 1s linear infinite;
+                        margin: 0 auto 1rem auto;
+                    "></div>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+        
+        // Cargar datos iniciales al abrir la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadIsraelPalestineAnalysis();
+            
+            // Agregar animación CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

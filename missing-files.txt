@@ -1,0 +1,10 @@
+app/api/solar/activity.py
+docs/info.md
+.env.example
+.gitignore
+public/dashboard/index.html
+scripts/cosmic-build.js
+src/app.js
+src/routes/solar.routes.js
+src/services/chizhevsky.service.js
+tests/unit/chizhevsky.test.js
