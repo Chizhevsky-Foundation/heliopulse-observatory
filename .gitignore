@@ -115,3 +115,28 @@ docker-compose.override.yml
 *.swp
 *.swo
 *~
+
+# 📁 Archivos temporales y de desarrollo
+*.backup
+*.tmp
+*.temp
+*.log
+*.bak
+
+# 📁 Backups organizados
+/backups/
+
+# 📁 Scripts de prueba temporales
+/test-*.js
+/check-*.js
+/analyze-*.js
+
+# 📁 Entornos virtuales Python
+venv/
+__pycache__/
+*.pyc
+
+# 📁 Configuraciones locales
+.env.local
+.secret
+config.local.json
