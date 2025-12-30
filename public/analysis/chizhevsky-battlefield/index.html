@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ Chizhevsky en el Frente - La Ciencia del Soldado y el Cosmos</title>
+    <style>
+        :root {
+            --trench-brown: #8B4513;
+            --blood-red: #8B0000;
+            --sky-blue: #87CEEB;
+            --sun-yellow: #FFD700;
+            --uniform-green: #556B2F;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c1810, #1a0f0a);
+            color: #f0e6d2;
+            line-height: 1.6;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(43, 34, 28, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid var(--trench-brown);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--blood-red);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .header::before {
+            content: "⚔️";
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: var(--sun-yellow);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #d4b483;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        
+        .chizhevsky-quote {
+            background: rgba(139, 69, 19, 0.3);
+            border-left: 4px solid var(--blood-red);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+        }
+        
+        .chizhevsky-quote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--blood-red);
+            opacity: 0.3;
+            position: absolute;
+            top: -1rem;
+            left: 0.5rem;
+        }
+        
+        .observation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .observation-card {
+            background: rgba(85, 107, 47, 0.2);
+            border: 1px solid var(--uniform-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .observation-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--sun-yellow);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .date {
+            color: var(--sun-yellow);
+            font-weight: bold;
+        }
+        
+        .location {
+            color: #d4b483;
+            font-size: 0.9rem;
+        }
+        
+        .solar-badge {
+            background: var(--blood-red);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .solar-badge.high { background: #8B0000; }
+        .solar-badge.medium { background: #B8860B; }
+        .solar-badge.low { background: #556B2F; }
+        
+        .analysis-section {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 1px solid rgba(139, 69, 19, 0.5);
+        }
+        
+        .section-title {
+            color: var(--sun-yellow);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .biological-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .biological-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .biological-list li::before {
+            content: "🧬";
+            font-size: 1.2rem;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-trench {
+            background: var(--uniform-green);
+            color: white;
+        }
+        
+        .btn-sun {
+            background: var(--sun-yellow);
+            color: black;
+        }
+        
+        .btn-blood {
+            background: var(--blood-red);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .data-display {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 1rem 0;
+            border: 1px solid var(--trench-brown);
+        }
+        
+        .military-alert {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.3), rgba(139, 69, 19, 0.3));
+            border: 2px solid var(--blood-red);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-level {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        /* Efectos especiales */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header fade-in">
+            <h1>⚔️ Chizhevsky en el Frente</h1>
+            <p class="subtitle">Observaciones directas: El Soldado y el Cosmos, 1915-1917</p>
+        </div>
+        
+        <!-- Cita principal -->
+        <div class="chizhevsky-quote fade-in">
+            "Los días de máxima erupción solar coincidían exactamente con los días de máxima 
+            agresividad militar. Vi artillería disparar sin objetivo claro, ataques lanzados 
+            contra toda lógica táctica. No era solo el enemigo contra quien luchábamos, 
+            era el cosmos entrando en nuestra sangre, apagando la razón."
+            <br><br>
+            <strong>- Alexander Chizhevsky, Frente del Volcán, 1916</strong>
+        </div>
+        
+        <!-- Observaciones históricas -->
+        <div class="analysis-section fade-in">
+            <h2 class="section-title">📅 Observaciones Documentadas en el Frente</h2>
+            <div class="observation-grid" id="observations-container">
+                <!-- Se llena con JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Controles -->
+        <div class="controls fade-in">
+            <button class="btn btn-trench" onclick="analyzeCurrentConditions()">
+                🎯 Analizar Condiciones Actuales
+            </button>
+            <button class="btn btn-sun" onclick="simulateHistoricalDay('1915-09-15')">
+                ⚡ Simular 15 Sept 1915 (Tormenta Severa)
+            </button>
+            <button class="btn btn-blood" onclick="generateCommanderAlert()">
+                🚨 Generar Alerta para Comandantes
+            </button>
+            <button class="btn btn-trench" onclick="showBiologicalEffects()">
+                🧬 Ver Efectos Biológicos
+            </button>
+        </div>
+        
+        <!-- Resultados del análisis -->
+        <div class="analysis-section fade-in">
+            <h2 class="section-title">📊 Análisis de Campo de Batalla</h2>
+            <div id="analysis-results">
+                <p>Selecciona una opción para comenzar el análisis...</p>
+            </div>
+        </div>
+        
+        <!-- Alerta militar -->
+        <div class="military-alert" id="alert-container" style="display: none;">
+            <div class="alert-header">
+                <h3>🚨 ALERTA DE COMANDO</h3>
+                <div class="alert-level" id="alert-level">NIVEL ALTO</div>
+            </div>
+            <div id="alert-content">
+                <!-- Contenido de la alerta -->
+            </div>
+        </div>
+        
+        <!-- Efectos biológicos -->
+        <div class="analysis-section" id="biological-effects" style="display: none;">
+            <h2 class="section-title">🧬 Mecanismos Biológicos Observados</h2>
+            <ul class="biological-list" id="effects-list">
+                <!-- Se llena con JavaScript -->
+            </ul>
+        </div>
+        
+        <!-- Datos JSON -->
+        <div class="analysis-section fade-in">
+            <h2 class="section-title">📄 Datos Científicos</h2>
+            <div class="data-display" id="data-output">
+                Los datos se cargarán aquí...
+            </div>
+        </div>
+        
+        <!-- Reflexión final -->
+        <div class="chizhevsky-quote fade-in" style="margin-top: 3rem;">
+            "Si los generales comprendieran que están luchando contra dos enemigos - 
+            el humano frente a ellos y el cósmico dentro de ellos - quizás encontrarían 
+            más momentos para el cigarrillo compartido en tierra de nadie, y menos para 
+            la artillería sin sentido."
+            <br><br>
+            <strong>- Última entrada del diario de Chizhevsky, 1917</strong>
+        </div>
+    </div>
+    
+    <script>
+        const BASE_URL = window.location.origin;
+        
+        // Cargar observaciones históricas
+        async function loadHistoricalObservations() {
+            const observations = [
+                {
+                    date: "1915-09-15",
+                    location: "Frente del Volcán",
+                    solarActivity: "Alta",
+                    aggression: "Extrema",
+                    note: "Tormenta geomagnética severa. Artillería intensificada 300%."
+                },
+                {
+                    date: "1916-03-08",
+                    location: "Trincheras del Este", 
+                    solarActivity: "Baja",
+                    aggression: "Moderada",
+                    note: "Día tranquilo solar. Negociaciones de tregua exitosas."
+                },
+                {
+                    date: "1917-11-11",
+                    location: "Frente Occidental",
+                    solarActivity: "Muy Alta",
+                    aggression: "Crítica",
+                    note: "Máximo solar. Ataques múltiples frentes simultáneos."
+                }
+            ];
+            
+            const container = document.getElementById('observations-container');
+            container.innerHTML = '';
+            
+            observations.forEach(obs => {
+                const card = document.createElement('div');
+                card.className = 'observation-card';
+                
+                const badgeClass = obs.solarActivity === 'Muy Alta' ? 'high' :
+                                 obs.solarActivity === 'Alta' ? 'medium' : 'low';
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <div class="date">${obs.date}</div>
+                            <div class="location">${obs.location}</div>
+                        </div>
+                        <div class="solar-badge ${badgeClass}">${obs.solarActivity}</div>
+                    </div>
+                    <p><strong>Agresividad:</strong> ${obs.aggression}</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9em; color: #d4b483;">
+                        ${obs.note}
+                    </p>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Analizar condiciones actuales
+        async function analyzeCurrentConditions() {
+            try {
+                showLoading('analysis-results', 'Analizando condiciones de campo de batalla...');
+                
+                const response = await fetch(`${BASE_URL}/api/battlefield/analysis`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const analysis = data.analysis;
+                    
+                    const html = `
+                        <div style="margin: 1rem 0;">
+                            <h3 style="color: var(--sun-yellow);">Condiciones Solares Actuales</h3>
+                            <p>KP Index: ${analysis.solarConditions.kpIndex}</p>
+                            <p>Viento Solar: ${analysis.solarConditions.solarWind.toFixed(0)} km/s</p>
+                            <p>Clasificación: ${analysis.solarConditions.classification}</p>
+                            
+                            <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 5px;">
+                                <h4>⚔️ Riesgo en Campo de Batalla</h4>
+                                <p><strong>Puntaje Agresividad:</strong> 
+                                    <span style="color: ${analysis.battlefieldRisk.score >= 70 ? '#ff6b6b' : 
+                                                     analysis.battlefieldRisk.score >= 50 ? '#FFD700' : '#90EE90'}">
+                                        ${analysis.battlefieldRisk.score}/100
+                                    </span>
+                                </p>
+                                <p><strong>Nivel:</strong> ${analysis.battlefieldRisk.level}</p>
+                                <p><strong>Comportamiento Predicho:</strong> ${analysis.battlefieldRisk.predictedBehavior.infantry}</p>
+                            </div>
+                            
+                            <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(139, 69, 19, 0.2); border-radius: 5px;">
+                                <h4>💭 Insight de Chizhevsky</h4>
+                                <p style="font-style: italic;">"${analysis.chizhevskyInsight}"</p>
+                            </div>
+                            
+                            <div style="margin: 1.5rem 0;">
+                                <h4>📋 Recomendaciones</h4>
+                                <ul style="margin-left: 1.5rem;">
+                                    ${analysis.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('analysis-results').innerHTML = html;
+                    
+                    // Mostrar datos JSON
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(analysis, null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                document.getElementById('analysis-results').innerHTML = 
+                    `<div style="color: #ff6b6b;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Simular día histórico
+        async function simulateHistoricalDay(date) {
+            try {
+                showLoading('analysis-results', `Simulando ${date}...`);
+                
+                const response = await fetch(`${BASE_URL}/api/battlefield/simulate/${date}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const sim = data.simulation;
+                    
+                    const html = `
+                        <div style="margin: 1rem 0;">
+                            <h3 style="color: var(--sun-yellow);">Simulación: ${date}</h3>
+                            <p style="color: #d4b483; font-style: italic;">
+                                "${data.historicalObservation.chizhevskyNote || 'Observación histórica'}"
+                            </p>
+                            
+                            <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(139, 0, 0, 0.2); border-radius: 5px;">
+                                <h4>⚔️ Condiciones en el Frente</h4>
+                                <p><strong>Puntaje Agresividad:</strong> ${sim.battlefieldRisk.score}/100</p>
+                                <p><strong>Nivel:</strong> ${sim.battlefieldRisk.level}</p>
+                                <p><strong>Equivalent Moderno:</strong> ${data.comparison.modernEquivalent}</p>
+                            </div>
+                            
+                            <div style="margin: 1.5rem 0;">
+                                <h4>🧬 Efectos Biológicos Documentados</h4>
+                                <ul style="margin-left: 1.5rem;">
+                                    ${sim.biologicalEffects.map(effect => `<li>${effect}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('analysis-results').innerHTML = html;
+                    
+                    // Mostrar datos JSON
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(data.simulation, null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                document.getElementById('analysis-results').innerHTML = 
+                    `<div style="color: #ff6b6b;">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Generar alerta para comandantes
+        async function generateCommanderAlert() {
+            try {
+                const response = await fetch(`${BASE_URL}/api/battlefield/commander-alert?kp=7`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const alert = data.alert;
+                    
+                    document.getElementById('alert-level').textContent = alert.alertLevel;
+                    document.getElementById('alert-content').innerHTML = `
+                        <p><strong>Prioridad:</strong> ${alert.priority}</p>
+                        <p><strong>Resumen:</strong> ${alert.summary}</p>
+                        <p><strong>Evaluación Riesgo:</strong> ${alert.riskAssessment}</p>
+                        
+                        <div style="margin: 1rem 0;">
+                            <h4>Acciones Inmediatas:</h4>
+                            <ol style="margin-left: 1.5rem;">
+                                ${alert.immediateActions.map((action, i) => `<li>${action}</li>`).join('')}
+                            </ol>
+                        </div>
+                        
+                        <p style="font-size: 0.9em; color: #d4b483;">
+                            <strong>Válido hasta:</strong> ${new Date(alert.validUntil).toLocaleTimeString()}
+                        </p>
+                    `;
+                    
+                    document.getElementById('alert-container').style.display = 'block';
+                    
+                    // Mostrar datos JSON
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(data.formattedForCommand, null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+        
+        // Mostrar efectos biológicos
+        async function showBiologicalEffects() {
+            try {
+                const response = await fetch(`${BASE_URL}/api/battlefield/biological-effects?kp=7&wind=550`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const list = document.getElementById('effects-list');
+                    list.innerHTML = '';
+                    
+                    data.biologicalEffects.forEach(effect => {
+                        const li = document.createElement('li');
+                        li.textContent = effect;
+                        list.appendChild(li);
+                    });
+                    
+                    document.getElementById('biological-effects').style.display = 'block';
+                    
+                    // Mostrar datos JSON
+                    document.getElementById('data-output').textContent = 
+                        JSON.stringify(data.mechanisms, null, 2);
+                        
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+        
+        // Mostrar estado de carga
+        function showLoading(elementId, message) {
+            document.getElementById(elementId).innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div class="pulse" style="
+                        border: 3px solid rgba(255,215,0,0.3);
+                        border-top: 3px solid var(--sun-yellow);
+                        border-radius: 50%;
+                        width: 40px;
+                        height: 40px;
+                        animation: spin 1s linear infinite;
+                        margin: 0 auto 1rem auto;
+                    "></div>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHistoricalObservations();
+            analyzeCurrentConditions();
+            
+            // Agregar animación CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

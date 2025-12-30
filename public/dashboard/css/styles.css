@@ -1,0 +1,322 @@
+/* 🌌 ESTILOS HELIOPULSE DASHBOARD */
+
+:root {
+    --cosmic-dark: #0a0e17;
+    --solar-gold: #ffd700;
+    --aurora-green: #00ff88;
+    --corona-orange: #ff6b35;
+    --deep-space: #1a1f3c;
+    --nebula-purple: #9d4edd;
+    --star-blue: #4cc9f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--cosmic-dark), var(--deep-space));
+    color: white;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Header cósmico */
+.cosmic-header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(180deg, rgba(10,14,23,0.9) 0%, rgba(26,31,60,0.7) 100%);
+    border-bottom: 2px solid var(--solar-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.cosmic-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, var(--nebula-purple), transparent 70%);
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.cosmic-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, var(--solar-gold), var(--corona-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.cosmic-header h2 {
+    font-size: 1.2rem;
+    color: var(--star-blue);
+    margin-bottom: 1rem;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+}
+
+.chizhevsky-quote {
+    font-style: italic;
+    color: var(--aurora-green);
+    max-width: 800px;
+    margin: 1rem auto;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border-left: 3px solid var(--aurora-green);
+    position: relative;
+    z-index: 1;
+}
+
+/* Grid del dashboard */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Tarjetas cósmicas */
+.cosmic-card {
+    background: linear-gradient(145deg, rgba(26,31,60,0.8), rgba(10,14,23,0.9));
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 15px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cosmic-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--solar-gold), var(--corona-orange), var(--aurora-green));
+}
+
+.cosmic-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--solar-gold);
+    box-shadow: 0 10px 30px rgba(255,215,0,0.1);
+}
+
+.card-title {
+    color: var(--solar-gold);
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255,215,0,0.2);
+    padding-bottom: 0.5rem;
+}
+
+/* Indicadores */
+.solar-indicator {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.indicator-group {
+    text-align: center;
+}
+
+.indicator-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--aurora-green);
+    margin-bottom: 0.25rem;
+    font-family: 'Courier New', monospace;
+}
+
+.indicator-label {
+    font-size: 0.9rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Barras de progreso */
+.risk-meter {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.risk-level {
+    height: 100%;
+    background: linear-gradient(90deg, var(--aurora-green), var(--solar-gold), var(--corona-orange));
+    border-radius: 6px;
+    transition: width 1s ease;
+}
+
+.meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.25rem;
+}
+
+/* Indicadores de estado */
+.status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.status-good { 
+    background: var(--aurora-green);
+    box-shadow: 0 0 10px var(--aurora-green);
+}
+.status-warning { 
+    background: var(--solar-gold);
+    box-shadow: 0 0 10px var(--solar-gold);
+}
+.status-danger { 
+    background: var(--corona-orange);
+    box-shadow: 0 0 10px var(--corona-orange);
+}
+
+/* Stream de datos */
+.data-stream {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid rgba(255,215,0,0.1);
+}
+
+.data-stream::-webkit-scrollbar {
+    width: 6px;
+}
+
+.data-stream::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.3);
+    border-radius: 3px;
+}
+
+.data-stream::-webkit-scrollbar-thumb {
+    background: var(--solar-gold);
+    border-radius: 3px;
+}
+
+.data-entry {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #ccc;
+}
+
+.data-entry:last-child {
+    border-bottom: none;
+}
+
+.data-time {
+    color: var(--star-blue);
+    margin-right: 0.5rem;
+}
+
+/* Información adicional */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.info-item {
+    background: rgba(0,0,0,0.3);
+    padding: 0.75rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--nebula-purple);
+}
+
+.info-label {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 1.1rem;
+    color: white;
+    font-weight: 500;
+}
+
+/* Tiempo de actualización */
+.update-time {
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Animaciones */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cosmic-header h1 {
+        font-size: 2rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    .solar-indicator {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Clases de utilidad */
+.hidden { display: none; }
+.text-center { text-align: center; }
+.mt-1 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 1rem; }

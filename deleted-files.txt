@@ -1,0 +1,2 @@
+.env.correcto
+src/services/chizhevskyAnalyzer.js

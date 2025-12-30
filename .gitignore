@@ -2,7 +2,7 @@
 .env
 .env.local
 .env*.local
-
+.env.correcto
 # Logs
 logs
 *.log
@@ -116,27 +116,12 @@ docker-compose.override.yml
 *.swo
 *~
 
-# 📁 Archivos temporales y de desarrollo
-*.backup
-*.tmp
-*.temp
-*.log
-*.bak
+# 🔒 ARCHIVOS DE ENTORNO - PROTEGIDOS POR LA FUNDACIÓN
+.env.correcto
+.env
+.env.*
 
-# 📁 Backups organizados
-/backups/
-
-# 📁 Scripts de prueba temporales
-/test-*.js
-/check-*.js
-/analyze-*.js
-
-# 📁 Entornos virtuales Python
-venv/
-__pycache__/
-*.pyc
-
-# 📁 Configuraciones locales
-.env.local
-.secret
-config.local.json
+# 🔒 ARCHIVOS DE ENTORNO - PROTEGIDOS POR LA FUNDACIÓN
+.env.correcto
+.env
+.env.*

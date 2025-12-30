@@ -10,8 +10,8 @@
 ### **Método 1: Constructor Automático (Recomendado)**
 ```bash
 # Clonar y construir automáticamente
-git clone https://github.com/chizhevsky-foundation/heliopulse-observatory
-cd heliopulse-observatory
+git clone https://github.com/chizhevsky-foundation/helio-pulse-project
+cd helio-pulse-project
 node scripts/cosmic-build.js
 npm start
 ```
@@ -197,8 +197,8 @@ Este proyecto continúa su visión de una humanidad consciente de sus conexiones
 ---
 
 **🌌 The Chizhevsky Foundation**  
-**🔗 https://chizhevsky-foundation.github.io/heliopulse-observatory/**  
-**📧 ia.mechmind@gmail.com**
+**🔗 https://chizhevsky-foundation.github.io/helio-pulse-project/**  
+**📧 contacto@chizhevsky-foundation.org**
 
 *Monitoreando el pulso solar para la paz global*
 
